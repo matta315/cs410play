@@ -18,7 +18,16 @@ import pandas as pd
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 #print("import nltk,vader and SentimentIntesity complete")
 
-vader = SentimentIntensityAnalyzer() #Create an instance of SentimentIntesityAnalyzer called vader
+#Create an instance of SentimentIntesityAnalyzer called vader
+vader = SentimentIntensityAnalyzer() #
 
-sample = "All Hell Breaks Loose at the Democratic Convention"
-print (vader.polarity_scores(sample))
+#Test a sample of text
+#sample = "All Hell Breaks Loose at the Democratic Convention"
+#print (vader.polarity_scores(sample))
+
+#Initialize Pandas Dataframe with test data
+df = pd.read_csv("/Users/nbachman/Documents/HCP Anywhere/GradSchool/Text Mining and Analytics/CS410-BiasDetector/data/ATL_D.csv")
+
+#Add a sentiment score of the title column to dataframe and print top 5
+df["scores"] = df["title"].apply(lambda title: vader.polarity_scores(title))
+print (df.head())
