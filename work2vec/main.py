@@ -83,8 +83,9 @@ def main():
     #print(X_train[0], '=', int_to_party(y_train[0]))
     #print(X_test[0], '=', int_to_party(y_test[0]))
 
-    word2vec = Magnitude("./vectors.magnitude")
+    #word2vec = Magnitude("./vectors.magnitude")
     #word2vec = Magnitude("glove.6B.50d.magnitude")
+    word2vec = Magnitude("wiki-news-300d-1M.magnitude")
     #print(word2vec.query("Trump"))
     #print(word2vec.dim)
     #print("dog" in word2vec)
