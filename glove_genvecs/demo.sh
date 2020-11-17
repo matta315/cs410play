@@ -71,3 +71,8 @@ if [ "$CORPUS" = 'text8' ]; then
        $PYTHON eval/python/evaluate.py
    fi
 fi
+
+# Finally, generate .magnitude file from glove's generated vectors.txt
+# Instruction at: https://github.com/plasticityai/magnitude#file-format-and-converter
+echo "Generating $FINAL_OUTPUT_FILE.magnitude.."
+python -m pymagnitude.converter -i $FINAL_OUTPUT_FILE.txt -o $FINAL_OUTPUT_FILE.magnitude

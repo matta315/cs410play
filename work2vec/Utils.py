@@ -2,9 +2,10 @@ import random
 from os import listdir
 from os.path import isfile, join
 
-from work2vec.config import *
-
 import pandas as pd
+from pymagnitude import MagnitudeUtils
+
+from work2vec.config import *
 
 
 class Utils(object):
@@ -74,4 +75,25 @@ class Utils(object):
                 # do not include the target word
                 f_corpus_all.write(ll.rsplit(' ', 1)[0] + "\n")
         pass
+
+    @staticmethod
+    def read_train_test_data(train_ff: str, test_ff: str):
+        with open(train_ff, 'rb') as ff:
+            trains = [line.decode('utf-8') for line in ff.readlines()]
+        with open(test_ff, 'rb') as ff:
+            tests = [line.decode('utf-8') for line in ff.readlines()]
+
+        """
+            etree_w2v = Pipeline([
+                ("word2vec vectorizer", MeanEmbeddingVectorizer(w2v)),
+                ("extra trees", ExtraTreesClassifier(n_estimators=200))])
+            """
+        add_party, label_to_int, int_to_label = MagnitudeUtils.class_encoding()
+
+        X_train = [line.split(" ")[0:-1] for line in trains]
+        y_train = [add_party(line.split(" ")[-1]) for line in trains]
+        X_test = [line.split(" ")[0:-1] for line in tests]
+        y_test = [add_party(line.split(" ")[-1]) for line in tests]
+
+        return X_train, y_train, X_test, y_test, label_to_int, int_to_label
 
