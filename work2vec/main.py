@@ -1,7 +1,11 @@
 from os import listdir
 from os.path import isfile, join
 import random
+
+from sklearn.pipeline import Pipeline
 from sklearn.ensemble import ExtraTreesClassifier
+
+from pymagnitude import MagnitudeUtils
 
 import pandas as pd
 
@@ -74,11 +78,38 @@ def prepare_train_test(data_dir: str, train_ff: str, test_ff: str):
     pass
 
 
+def read_train_test_data(train_ff: str, test_ff: str):
+    with open(train_ff, 'rb') as ff:
+        trains = [line.decode('utf-8') for line in ff.readlines()]
+    with open(test_ff, 'rb') as ff:
+        tests = [line.decode('utf-8') for line in ff.readlines()]
+
+    """
+        etree_w2v = Pipeline([
+            ("word2vec vectorizer", MeanEmbeddingVectorizer(w2v)),
+            ("extra trees", ExtraTreesClassifier(n_estimators=200))])
+        """
+    add_party, party_to_int, int_to_party = MagnitudeUtils.class_encoding()
+
+    X_train = [line.split(" ")[0:-1] for line in trains]
+    y_train = [add_party(line.split(" ")[-1]) for line in trains]
+    X_test = [line.split(" ")[0:-1] for line in tests]
+    y_test = [add_party(line.split(" ")[-1]) for line in tests]
+
+    return X_train, y_train, X_test, y_test, party_to_int, int_to_party
+
+
 def main():
     data_dir = './rawdata'
     train_ff = './train.txt'
     test_ff = './test.txt'
-    prepare_train_test(data_dir, train_ff, test_ff)
+    #prepare_train_test(data_dir, train_ff, test_ff)
+
+    X_train, y_train, X_test, y_test, party_to_int, int_to_party = read_train_test_data(train_ff, test_ff)
+    print(X_train[0])
+    print(int_to_party(y_train[0]))
+    print(X_test[0])
+    print(int_to_party(y_test[0]))
 
     pass
 
