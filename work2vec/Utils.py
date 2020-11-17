@@ -26,7 +26,7 @@ class Utils(object):
         return "{} {}".format(text, target)
 
     @staticmethod
-    def prepare_train_test(data_dir: str, train_ff: str, test_ff: str):
+    def prepare_train_test_and_corpus(data_dir: str, train_ff: str, test_ff: str):
         ffs = [f for f in listdir(data_dir) if isfile(join(data_dir, f)) and f.endswith('.csv')]
         democrats = []
         republics = []

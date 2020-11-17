@@ -74,7 +74,7 @@ class TfidfEmbeddingVectorizer(object):
 def main():
     do_prepare_train_test = False
     if do_prepare_train_test:
-        Utils.prepare_train_test(DATA_DIR, TRAIN_FF, TEST_FF)
+        Utils.prepare_train_test_and_corpus(DATA_DIR, TRAIN_FF, TEST_FF)
         exit(0)
 
     # Now: proceed to create the .magnitude file manually, then come back here and resume
@@ -82,6 +82,13 @@ def main():
     X_train, y_train, X_test, y_test, party_to_int, int_to_party = Utils.read_train_test_data(TRAIN_FF, TEST_FF)
     #print(X_train[0], '=', int_to_party(y_train[0]))
     #print(X_test[0], '=', int_to_party(y_test[0]))
+
+    """
+    # Here are different pre-trained glove vectors (aka dictionary) to consider
+    !curl -s http://magnitude.plasticity.ai/glove+subword/glove.6B.50d.magnitude --output vectors.magnitude
+    # !curl -s http://magnitude.plasticity.ai/word2vec+subword/GoogleNews-vectors-negative300.magnitude --output vectors.magnitude
+    # !curl -s http://magnitude.plasticity.ai/fasttext+subword/wiki-news-300d-1M.magnitude --output vectors.magnitude
+    """
 
     #word2vec = Magnitude("./vectors.magnitude")
     #word2vec = Magnitude("glove.6B.50d.magnitude")
