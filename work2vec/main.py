@@ -100,16 +100,14 @@ def read_train_test_data(train_ff: str, test_ff: str):
 
 
 def main():
-    data_dir = './rawdata'
+    data_dir = '../rawdata'
     train_ff = './train.txt'
     test_ff = './test.txt'
     #prepare_train_test(data_dir, train_ff, test_ff)
 
     X_train, y_train, X_test, y_test, party_to_int, int_to_party = read_train_test_data(train_ff, test_ff)
-    print(X_train[0])
-    print(int_to_party(y_train[0]))
-    print(X_test[0])
-    print(int_to_party(y_test[0]))
+    print(X_train[0], '=', int_to_party(y_train[0]))
+    print(X_test[0], '=', int_to_party(y_test[0]))
 
     pass
 
