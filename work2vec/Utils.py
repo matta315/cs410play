@@ -62,5 +62,16 @@ class Utils(object):
         with open(test_ff, 'w') as ftest:
             for ll in tests:
                 ftest.write(ll + "\n")
+
+        # global thing to do: write to corpus txt for later generation of .magnitude database (word -> embedded vector)
+        with open(CORPUS_TRAIN_FF, 'w') as f_corpus_train, open(CORPUS_ALL_FF, 'w') as f_corpus_all:
+            for ll in trains:
+                # do not include the target word
+                f_corpus_train.write(ll.rsplit(' ', 1)[0] + "\n")
+            t_all = democrats + republics
+            random.shuffle(t_all)
+            for ll in t_all:
+                # do not include the target word
+                f_corpus_all.write(ll.rsplit(' ', 1)[0] + "\n")
         pass
 

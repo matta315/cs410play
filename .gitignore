@@ -128,3 +128,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea/
+
+# files generate by glove
+**/cooccurrence.bin
+**/cooccurrence.shuf.bin
+**/vectors.bin
+**/vectors.txt
+**/vocab.txt

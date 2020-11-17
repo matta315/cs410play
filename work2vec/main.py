@@ -1,15 +1,7 @@
-from os import listdir
-from os.path import isfile, join
-import random
-
-from sklearn.pipeline import Pipeline
-from sklearn.ensemble import ExtraTreesClassifier
-
 from pymagnitude import MagnitudeUtils
 
-import pandas as pd
-
 from work2vec.Utils import Utils
+from work2vec.config import *
 
 """
 Trying this method
@@ -44,12 +36,9 @@ def read_train_test_data(train_ff: str, test_ff: str):
 
 
 def main():
-    data_dir = '../rawdata'
-    train_ff = './train.txt'
-    test_ff = './test.txt'
-    Utils.prepare_train_test(data_dir, train_ff, test_ff)
+    Utils.prepare_train_test(DATA_DIR, TRAIN_FF, TEST_FF)
 
-    X_train, y_train, X_test, y_test, party_to_int, int_to_party = read_train_test_data(train_ff, test_ff)
+    X_train, y_train, X_test, y_test, party_to_int, int_to_party = read_train_test_data(TRAIN_FF, TEST_FF)
     print(X_train[0], '=', int_to_party(y_train[0]))
     print(X_test[0], '=', int_to_party(y_test[0]))
 
