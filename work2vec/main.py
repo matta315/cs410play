@@ -113,10 +113,10 @@ def main():
     """
 
     # Model Accuracy
-    print("Accuracy:", metrics.accuracy_score(y_test, predicted))
+    print("Accuracy :", metrics.accuracy_score(y_test, predicted))
     print("Precision:", metrics.precision_score(y_test, predicted))
-    print("Recall:", metrics.recall_score(y_test, predicted))
-    print("F1 score:", metrics.f1_score(y_test, predicted))
+    print("Recall   :", metrics.recall_score(y_test, predicted))
+    print("F1 score :", metrics.f1_score(y_test, predicted))
 
     pass
 
