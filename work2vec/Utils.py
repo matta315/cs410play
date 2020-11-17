@@ -21,7 +21,8 @@ class Utils(object):
     # Exmaple test file : http://magnitude.plasticity.ai/data/atis/atis-intent-test.txt
     @staticmethod
     def format_for_glove(text: str, target: str):
-        return "BOS {} EOS {}".format(text, target)
+        return "__BOS__ {} __EOS__ {}".format(text, target)
+        #return "{} {}".format(text, target)
 
     @staticmethod
     def prepare_train_test(data_dir: str, train_ff: str, test_ff: str):
