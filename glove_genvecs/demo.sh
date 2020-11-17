@@ -23,15 +23,15 @@ BUILDDIR=build
 VERBOSE=2
 MEMORY=4.0
 
-VOCAB_MIN_COUNT=1
+VOCAB_MIN_COUNT=2
 
 SYMMETRIC=1
-WINDOW_SIZE=3
+WINDOW_SIZE=10
 
-VECTOR_SIZE=100
+VECTOR_SIZE=50
 NUM_THREADS=8
-MAX_ITER=15
-ETA=0.06
+MAX_ITER=200
+ETA=0.02
 BINARY=2
 MODEL=2
 X_MAX=10
@@ -68,7 +68,9 @@ if [ "$CORPUS" = 'text8' ]; then
        octave < ./eval/octave/read_and_evaluate_octave.m 1>&2
    else
        echo "$ $PYTHON eval/python/evaluate.py"
-       $PYTHON eval/python/evaluate.py
+       $PYTHON eval/python/evaluate.py || {
+         echo shelltestlog.txt
+       }
    fi
 fi
 

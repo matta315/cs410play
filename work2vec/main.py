@@ -34,8 +34,9 @@ class MeanEmbeddingVectorizer(object):
 
     def transform(self, X):
         return np.array([
-            np.mean([self.word2vec.query(w) for w in words if w in self.word2vec]
-                    or [np.zeros(self.dim)], axis=0)
+            #np.mean([self.word2vec.query(w) for w in words if w in self.word2vec]
+            #        or [np.zeros(self.dim)], axis=0)
+            np.mean([self.word2vec.query(w) for w in words], axis=0)
             for words in X
         ])
 
@@ -76,12 +77,13 @@ def main():
         Utils.prepare_train_test(DATA_DIR, TRAIN_FF, TEST_FF)
         exit(0)
 
+    # Now: proceed to create the .magnitude file manually, then come back here and resume
+
     X_train, y_train, X_test, y_test, party_to_int, int_to_party = Utils.read_train_test_data(TRAIN_FF, TEST_FF)
     #print(X_train[0], '=', int_to_party(y_train[0]))
     #print(X_test[0], '=', int_to_party(y_test[0]))
 
-    word2vec = Magnitude("./vectors-all.magnitude")
-    #word2vec = Magnitude("./vectors-train.magnitude")
+    word2vec = Magnitude("./vectors.magnitude")
     #word2vec = Magnitude("glove.6B.50d.magnitude")
     #print(word2vec.query("Trump"))
     #print(word2vec.dim)

@@ -5,6 +5,7 @@ from os.path import isfile, join
 import pandas as pd
 from pymagnitude import MagnitudeUtils
 
+from work2vec.Tokenizer import Tokenizer as Toki
 from work2vec.config import *
 
 
@@ -21,7 +22,7 @@ class Utils(object):
     # Exmaple test file : http://magnitude.plasticity.ai/data/atis/atis-intent-test.txt
     @staticmethod
     def format_for_glove(text: str, target: str):
-        return "__BOS__ {} __EOS__ {}".format(text, target)
+        return "BOS {} EOS {}".format(text, target)
         #return "{} {}".format(text, target)
 
     @staticmethod
@@ -42,7 +43,9 @@ class Utils(object):
             titles = df['title'].to_list()
             selected_group = democrats if target == TAR_DEMOCRAT else republics
             for title in titles:
-                strline = Utils.clean_text_noise(title)
+                strline = title
+                strline = Utils.clean_text_noise(strline)
+                strline = Toki.tokenize_text(strline)
                 strline = Utils.format_for_glove(strline, target)
                 selected_group.append(strline)
 
