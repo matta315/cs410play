@@ -14,6 +14,13 @@ http://nadbordrozd.github.io/blog/2016/05/20/text-classification-with-word2vec/
 - Republican = 0
 In combination with this work
 https://colab.research.google.com/drive/1lOcAhIffLW8XC6QsKzt5T_ZqPP4Y9eS4#scrollTo=KGPuY8DByPyU
+
+test some change
+asdfdsf a
+
+asdf
+asd
+f
 """
 
 
