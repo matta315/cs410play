@@ -1,7 +1,7 @@
 TAR_DEMOCRAT = 'democrat'
 TAR_REPUBLIC = 'republic'
 
-TRAIN_RATIO = 0.7
+TRAIN_RATIO = 0.6
 
 DATA_DIR = '../rawdata'
 TRAIN_FF = './train.txt'

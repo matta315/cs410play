@@ -25,11 +25,16 @@ f
 
 
 def main():
+    # this step is to prepare train, test & corpus as text files
+    # set to True to run once. You'll get 4 files: train, test, corpus-train & corpus-all
+    # then set to False to actually start training once you already had data
     do_prepare_train_test = False
     if do_prepare_train_test:
         Utils.prepare_train_test_and_corpus(DATA_DIR, TRAIN_FF, TEST_FF)
         exit(0)
 
+    # STOP HERE! READ ME!
+    # STOP HERE! READ ME!
     # Now: proceed to create the .magnitude file manually, then come back here and resume
 
     X_train, y_train, X_test, y_test, party_to_int, int_to_party = Utils.read_train_test_data(TRAIN_FF, TEST_FF)

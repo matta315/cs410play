@@ -49,10 +49,14 @@ class Utils(object):
                 strline = Utils.format_for_glove(strline, target)
                 selected_group.append(strline)
 
+        # shuffle arrays to guarantee unbias training
         random.shuffle(democrats)
         random.shuffle(republics)
         print("democrats =", len(democrats))
         print("republics =", len(republics))
+
+        # the train/test split ratio has to applied separate to both democrats & republics, so that in either train or
+        # test set, our democrat count / republican count == same
         c1 = int(len(democrats) * TRAIN_RATIO)
         c2 = int(len(republics) * TRAIN_RATIO)
         trains = democrats[:c1] + republics[:c2]
@@ -61,6 +65,8 @@ class Utils(object):
         random.shuffle(tests)
         print("trains =", len(trains))
         print("tests =", len(tests))
+
+        # now have 2 arrays trains & tests, we proceed to write them to respective files
         with open(train_ff, 'w') as ftrain:
             for ll in trains:
                 ftrain.write(ll + "\n")
@@ -68,6 +74,7 @@ class Utils(object):
             for ll in tests:
                 ftest.write(ll + "\n")
 
+        # build corpus
         # global thing to do: write to corpus txt for later generation of .magnitude database (word -> embedded vector)
         with open(CORPUS_TRAIN_FF, 'w') as f_corpus_train, open(CORPUS_ALL_FF, 'w') as f_corpus_all:
             for ll in trains:
