@@ -38,8 +38,9 @@ def main():
     # Now: proceed to create the .magnitude file manually, then come back here and resume
 
     X_train, y_train, X_test, y_test, party_to_int, int_to_party = Utils.read_train_test_data(TRAIN_FF, TEST_FF)
-    #print(X_train[0], '=', int_to_party(y_train[0]))
-    #print(X_test[0], '=', int_to_party(y_test[0]))
+    print(X_train[0], '=', int_to_party(y_train[0]))
+    print(X_test[0], '=', int_to_party(y_test[0]))
+    #exit(0)
 
     """
     # Here are different pre-trained glove vectors (aka dictionary) to consider

@@ -103,6 +103,7 @@ class Utils(object):
 
         X_train = [line.split(" ")[0:-1] for line in trains]
         y_train = [add_party(line.split(" ")[-1]) for line in trains]
+
         X_test = [line.split(" ")[0:-1] for line in tests]
         y_test = [add_party(line.split(" ")[-1]) for line in tests]
 
