@@ -22,11 +22,12 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 vader = SentimentIntensityAnalyzer() #
 
 #Test a sample of text
-#sample = "All Hell Breaks Loose at the Democratic Convention"
-#print (vader.polarity_scores(sample))
+sample = "Stephen is Awesome and Great ):"
+print (sample)
+print (vader.polarity_scores(sample))
 
 #Initialize Pandas Dataframe with test data
-df = pd.read_csv("/Users/nbachman/Documents/HCP Anywhere/GradSchool/Text Mining and Analytics/CS410-BiasDetector/data/NPR_R.csv")
+df = pd.read_csv("/Users/nbachman/Documents/HCP Anywhere/GradSchool/Text Mining and Analytics/CS410-BiasDetector/data_raw/NYT_D.csv")
 
 #Add a sentiment score of the title column to dataframe and print top 5
 df["scores"] = df["title"].apply(lambda title: vader.polarity_scores(title))
@@ -38,7 +39,7 @@ df["compound"] = df["scores"].apply(lambda score_dict: score_dict["compound"])
 
 #Add a sentiment column for pos, neg or neutral
 df["sentiment"] = df["compound"].apply(lambda c: "positive" if c > 0 else ("negative" if c < 0 else "neutral"))
-print (df.head())
+#print (df.head())
 
 #Print the number of neutral, positve and negative headlines
-print (df["sentiment"].value_counts())
+#print (df["sentiment"].value_counts())
