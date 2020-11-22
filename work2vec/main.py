@@ -1,5 +1,6 @@
 from pymagnitude import Magnitude
 from sklearn.ensemble import ExtraTreesClassifier, AdaBoostClassifier
+from sklearn.linear_model import LogisticRegression
 
 from work2vec.Utils import Utils
 from work2vec.config import *
@@ -30,7 +31,8 @@ def main():
     # then set to False to actually start training once you already had data
     do_prepare_train_test = False
     if do_prepare_train_test:
-        Utils.prepare_train_test_and_corpus(DATA_DIR, TRAIN_FF, TEST_FF)
+        #Utils.prepare_train_test_and_corpus(DATA_DIR, TRAIN_FF, TEST_FF)
+        Utils.read_label_data(LABELED_DATA_DIR, TRAIN_FF, TEST_FF)
         exit(0)
 
     # STOP HERE! READ ME!
@@ -50,6 +52,20 @@ def main():
     """
 
     word2vec = Magnitude("./vectors.magnitude")
+
+    # debug to understand what word2vec is
+    #print(len(word2vec))
+    #print(word2vec.dim)
+    #print("dog" in word2vec)
+    #print("trump" in word2vec)
+    #print("democrat" in word2vec)
+    #print(word2vec.query('trump'))
+    #print(word2vec.distance("biden", "republican"))
+    #print(word2vec.similarity("Democrats", ""))
+    #print(word2vec.distance("Democrats", ["Trump", "leadership", "chairman"]))
+    #print(word2vec.similarity("Democrats", ["Trump", "leadership", "chairman"]))
+    #exit(0)
+
     #word2vec = Magnitude("glove.6B.50d.magnitude")
     #word2vec = Magnitude("wiki-news-300d-1M.magnitude")
     #print(word2vec.query("Trump"))
@@ -72,18 +88,19 @@ def main():
 
     """
     samtest = runner.predict([
-        'BOS Rejecting Trump, Wall Street Republican donors scatter largesse EOS'.split(' ')
-        , 'BOS With one bill, Republicans fast track plan to undo Obama regulations EOS'.split(' ')
-        , 'BOS Democrats fret unions’ pressure tactics on trade EOS'.split(' ')
+        'moderate republican costello feels health care pressure in town hall'.split(' ')
+        , 'here ’s the man who ’s destroying the republican party but it ’s not donald trump'.split(' ')
+        , "carly fiorina was briefly a republican primary star now she 's dropping out of the race".split(' ')
     ])
     print([int_to_party(item) for item in samtest])
+    exit(0)
     """
 
     # Model Accuracy
     print("Accuracy :", metrics.accuracy_score(y_test, predicted))
-    print("Precision:", metrics.precision_score(y_test, predicted))
-    print("Recall   :", metrics.recall_score(y_test, predicted))
-    print("F1 score :", metrics.f1_score(y_test, predicted))
+    print("Precision:", metrics.precision_score(y_test, predicted, average='weighted'))
+    print("Recall   :", metrics.recall_score(y_test, predicted, average='weighted'))
+    print("F1 score :", metrics.f1_score(y_test, predicted, average='weighted'))
 
     pass
 

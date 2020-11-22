@@ -26,6 +26,77 @@ class Utils(object):
         return "{} {}".format(text, target)
 
     @staticmethod
+    def read_label_data(data_dir: str, train_ff: str, test_ff: str):
+        ffs = [f for f in listdir(data_dir) if isfile(join(data_dir, f)) and f.endswith('.csv')]
+        lefts = []
+        rights = []
+        neutrals = []
+        for ff in ffs:
+            ff_path = join(data_dir, ff)
+            df = pd.read_csv(ff_path)
+
+            # retrieve data as a list of tuple ($Title, $Bias)
+            items = df[['Title', 'Bias']].to_records(index=False)
+
+            for item in items:
+                headline = item[0]
+                target = item[1].strip().lower()
+                headline = Utils.clean_text_noise(headline)
+                headline = Toki.tokenize_text(headline)
+                line_to_write = Utils.format_for_glove(headline, target)
+
+                if target == TAR_LEFT:
+                    selected_group = lefts
+                elif target == TAR_RIGHT:
+                    selected_group = rights
+                elif target == TAR_NEUTRAL:
+                    selected_group = neutrals
+                else:
+                    raise Exception("Invalid target {}!".format(target))
+                selected_group.append(line_to_write)
+
+        # shuffle arrays to guarantee unbias training
+        random.shuffle(lefts)
+        random.shuffle(rights)
+        random.shuffle(neutrals)
+        print("lefts =", len(lefts))
+        print("rights =", len(rights))
+        print("neutrals =", len(neutrals))
+
+        # the train/test split ratio has to applied separate to both lefts & rights, so that in either train or
+        # test set, our democrat count / republican count == same
+        cutoff_left = int(len(lefts) * TRAIN_RATIO)
+        cutoff_right = int(len(rights) * TRAIN_RATIO)
+        cutoff_neutral = int(len(neutrals) * TRAIN_RATIO)
+        trains = lefts[:cutoff_left] + rights[:cutoff_right] + neutrals[:cutoff_neutral]
+        tests = lefts[cutoff_left:] + rights[cutoff_right:] + neutrals[cutoff_neutral:]
+        random.shuffle(trains)
+        random.shuffle(tests)
+        print("trains =", len(trains))
+        print("tests =", len(tests))
+
+        # now have 2 arrays trains & tests, we proceed to write them to respective files
+        with open(train_ff, 'w') as ftrain:
+            for ll in trains:
+                ftrain.write(ll + "\n")
+        with open(test_ff, 'w') as ftest:
+            for ll in tests:
+                ftest.write(ll + "\n")
+
+        # build corpus
+        # global thing to do: write to corpus txt for later generation of .magnitude database (word -> embedded vector)
+        with open(CORPUS_TRAIN_FF, 'w') as f_corpus_train, open(CORPUS_ALL_FF, 'w') as f_corpus_all:
+            for ll in trains:
+                # do not include the target word
+                f_corpus_train.write(ll.rsplit(' ', 1)[0] + "\n")
+            t_all = lefts + rights
+            random.shuffle(t_all)
+            for ll in t_all:
+                # do not include the target word
+                f_corpus_all.write(ll.rsplit(' ', 1)[0] + "\n")
+        pass
+
+    @staticmethod
     def prepare_train_test_and_corpus(data_dir: str, train_ff: str, test_ff: str):
         ffs = [f for f in listdir(data_dir) if isfile(join(data_dir, f)) and f.endswith('.csv')]
         democrats = []
