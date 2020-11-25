@@ -114,4 +114,4 @@ if __name__ == "__main__":
     get_accuracy(df)
 
     #Export Results to CSV file
-    df.to_csv("/Users/nbachman/Documents/HCP Anywhere/GradSchool/Text Mining and Analytics/CS410-BiasDetector/DT_Sentiment.csv")
+    df.to_csv("/Users/nbachman/Documents/HCP Anywhere/GradSchool/Text Mining and Analytics/CS410-BiasDetector/DT_Sentiment1.csv")

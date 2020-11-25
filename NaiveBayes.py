@@ -31,6 +31,38 @@ count_vect.fit(trainDF['Title'])
 xtrain_count =  count_vect.transform(train_x)
 xvalid_count =  count_vect.transform(valid_x)
 
+#2.2 TF-IDF Vectors as features
+
+# word level tf-idf
+tfidf_vect = TfidfVectorizer(analyzer='word', token_pattern=r'\w{1,}', max_features=5000)
+tfidf_vect.fit(trainDF['Title'])
+xtrain_tfidf =  tfidf_vect.transform(train_x)
+xvalid_tfidf =  tfidf_vect.transform(valid_x)
+
+# ngram level tf-idf 
+tfidf_vect_ngram = TfidfVectorizer(analyzer='word', token_pattern=r'\w{1,}', ngram_range=(2,3), max_features=5000)
+tfidf_vect_ngram.fit(trainDF['Title'])
+xtrain_tfidf_ngram =  tfidf_vect_ngram.transform(train_x)
+xvalid_tfidf_ngram =  tfidf_vect_ngram.transform(valid_x)
+
+#2.5 Topic Models as features
+
+# train a LDA Model
+lda_model = decomposition.LatentDirichletAllocation(n_components=20, learning_method='online', max_iter=20)
+X_topics = lda_model.fit_transform(xtrain_count)
+topic_word = lda_model.components_ 
+vocab = count_vect.get_feature_names()
+
+# view the topic models
+n_top_words = 1
+topic_summaries = []
+for i, topic_dist in enumerate(topic_word):
+    topic_words = numpy.array(vocab)[numpy.argsort(topic_dist)][:-(n_top_words+1):-1]
+    topic_summaries.append(' '.join(topic_words))
+
+print (topic_summaries)
+
+
 #Utility Funtion to Train a model
 def train_model(classifier, feature_vector_train, label, feature_vector_valid, is_neural_net=False):
     # fit the training dataset on the classifier
@@ -39,7 +71,7 @@ def train_model(classifier, feature_vector_train, label, feature_vector_valid, i
     # predict the labels on validation dataset
     predictions = classifier.predict(feature_vector_valid)
 
-    print(predictions)
+    #print(predictions)
     
     if is_neural_net:
         predictions = predictions.argmax(axis=-1)
@@ -50,5 +82,5 @@ def train_model(classifier, feature_vector_train, label, feature_vector_valid, i
 
 # Naive Bayes on Count Vectors
 accuracy = train_model(naive_bayes.MultinomialNB(), xtrain_count, train_y, xvalid_count)
-print ("NB, Count Vectors: ", accuracy)
+#print ("NB, Count Vectors: ", accuracy)
 

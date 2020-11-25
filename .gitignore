@@ -2,4 +2,8 @@
 .DS_Store?
 .ipynb_checkpoints
 CS410 Course Project Proposal.pdf
+NaivBayes.py
+spacy_test.py
+test.csv
+word_count.py
 

@@ -1,15 +1,10 @@
 # CourseProject
-
 CS 410 Group Project
 
-
-# Create and Activate a Virtual Enviroment 
-Create a new virtual environment called NLTK
-
+# Create and Activate a Virtual Enviroment called NLTK
 python3 -m venv .NLTK
 
-Activate the new virtual environment
-
+# Activate the new virtual environment
 source .NLTK/bin/activate
 
 # Package install
@@ -24,3 +19,7 @@ pip install pandas
 
 To install Scikit-learn, run the following in the terminal
 pip install scikit-learn
+
+To install spacy
+pip3 install spacy
+python3 -m spacy download en_core_web_sm

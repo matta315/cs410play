@@ -73,7 +73,7 @@ def get_bias(df):
 
 if __name__ == "__main__":
     #Initialize Pandas Dataframe with test data
-    df = pd.read_csv("/Users/nbachman/Documents/HCP Anywhere/GradSchool/Text Mining and Analytics/CS410-BiasDetector/data_raw/NPR_All.csv")
+    df = pd.read_csv("/Users/nbachman/Documents/HCP Anywhere/GradSchool/Text Mining and Analytics/CS410-BiasDetector/data_raw/ATL_ALL.csv")
 
     #Remove any extra quotes from the titles for better matching
     df["title"] = df["title"].apply(lambda x: x.replace('"', ''))
