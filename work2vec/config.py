@@ -8,7 +8,8 @@ TAR_NEUTRAL = 'neutral'
 TRAIN_RATIO = 0.6
 
 DATA_DIR = '../rawdata'
-LABELED_DATA_DIR = '../labeled_data'
+#LABELED_DATA_DIR = '../labeled_data/politics'
+LABELED_DATA_DIR = '../labeled_data/airline'
 TRAIN_FF = './train.txt'
 TEST_FF = './test.txt'
 

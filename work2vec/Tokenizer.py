@@ -1,4 +1,6 @@
 from spacy.lang.en import English
+import spacy
+
 
 """
 Guide https://www.dataquest.io/blog/tutorial-text-classification-in-python-using-spacy/
@@ -26,6 +28,9 @@ class Tokenizer(object):
         # debug
         #for tk in doc:
         #    print(tk.text, ': ', tk.lemma_, tk.pos_, tk.is_punct)
+
+        # Removing stop words
+        #toks = [tk for tk in toks if not tk.is_stop]
 
         # 'PRON' means pronoun
         ws = [tk.text if tk.pos_ == 'PRON' else tk.lemma_ for tk in toks]

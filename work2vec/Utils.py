@@ -28,9 +28,7 @@ class Utils(object):
     @staticmethod
     def read_label_data(data_dir: str, train_ff: str, test_ff: str):
         ffs = [f for f in listdir(data_dir) if isfile(join(data_dir, f)) and f.endswith('.csv')]
-        lefts = []
-        rights = []
-        neutrals = []
+        target_to_data = {}
         for ff in ffs:
             ff_path = join(data_dir, ff)
             df = pd.read_csv(ff_path)
@@ -45,31 +43,27 @@ class Utils(object):
                 headline = Toki.tokenize_text(headline)
                 line_to_write = Utils.format_for_glove(headline, target)
 
-                if target == TAR_LEFT:
-                    selected_group = lefts
-                elif target == TAR_RIGHT:
-                    selected_group = rights
-                elif target == TAR_NEUTRAL:
-                    selected_group = neutrals
-                else:
-                    raise Exception("Invalid target {}!".format(target))
+                if target not in target_to_data:
+                    target_to_data[target] = []
+                selected_group = target_to_data[target]
                 selected_group.append(line_to_write)
 
+        group_names = sorted(target_to_data.keys())
+
         # shuffle arrays to guarantee unbias training
-        random.shuffle(lefts)
-        random.shuffle(rights)
-        random.shuffle(neutrals)
-        print("lefts =", len(lefts))
-        print("rights =", len(rights))
-        print("neutrals =", len(neutrals))
+        for name in group_names:
+            random.shuffle(target_to_data[name])
+            print("{} = {}".format(name, len(target_to_data[name])))
 
         # the train/test split ratio has to applied separate to both lefts & rights, so that in either train or
         # test set, our democrat count / republican count == same
-        cutoff_left = int(len(lefts) * TRAIN_RATIO)
-        cutoff_right = int(len(rights) * TRAIN_RATIO)
-        cutoff_neutral = int(len(neutrals) * TRAIN_RATIO)
-        trains = lefts[:cutoff_left] + rights[:cutoff_right] + neutrals[:cutoff_neutral]
-        tests = lefts[cutoff_left:] + rights[cutoff_right:] + neutrals[cutoff_neutral:]
+        cutoffs = [int(len(target_to_data[name])*TRAIN_RATIO) for name in group_names]
+        trains = []
+        tests = []
+        for name, cof in zip(group_names, cutoffs):
+            gg = target_to_data[name]
+            trains += gg[:cof]
+            tests += gg[cof:]
         random.shuffle(trains)
         random.shuffle(tests)
         print("trains =", len(trains))
@@ -89,9 +83,7 @@ class Utils(object):
             for ll in trains:
                 # do not include the target word
                 f_corpus_train.write(ll.rsplit(' ', 1)[0] + "\n")
-            t_all = lefts + rights
-            random.shuffle(t_all)
-            for ll in t_all:
+            for ll in trains + tests:
                 # do not include the target word
                 f_corpus_all.write(ll.rsplit(' ', 1)[0] + "\n")
         pass
@@ -170,13 +162,13 @@ class Utils(object):
                 ("word2vec vectorizer", MeanEmbeddingVectorizer(w2v)),
                 ("extra trees", ExtraTreesClassifier(n_estimators=200))])
             """
-        add_party, label_to_int, int_to_label = MagnitudeUtils.class_encoding()
+        add_label, label_to_int, int_to_label = MagnitudeUtils.class_encoding()
 
         X_train = [line.split(" ")[0:-1] for line in trains]
-        y_train = [add_party(line.split(" ")[-1]) for line in trains]
+        y_train = [add_label(line.split(" ")[-1]) for line in trains]
 
         X_test = [line.split(" ")[0:-1] for line in tests]
-        y_test = [add_party(line.split(" ")[-1]) for line in tests]
+        y_test = [add_label(line.split(" ")[-1]) for line in tests]
 
         return X_train, y_train, X_test, y_test, label_to_int, int_to_label
 

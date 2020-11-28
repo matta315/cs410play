@@ -39,9 +39,9 @@ def main():
     # STOP HERE! READ ME!
     # Now: proceed to create the .magnitude file manually, then come back here and resume
 
-    X_train, y_train, X_test, y_test, party_to_int, int_to_party = Utils.read_train_test_data(TRAIN_FF, TEST_FF)
-    print(X_train[0], '=', int_to_party(y_train[0]))
-    print(X_test[0], '=', int_to_party(y_test[0]))
+    X_train, y_train, X_test, y_test, label_to_int, int_to_label = Utils.read_train_test_data(TRAIN_FF, TEST_FF)
+    print(X_train[0], '=', int_to_label(y_train[0]))
+    print(X_test[0], '=', int_to_label(y_test[0]))
     #exit(0)
 
     """
@@ -74,12 +74,17 @@ def main():
 
     from sklearn.pipeline import Pipeline
     from sklearn import metrics
+    from sklearn.svm import SVC
+
+    svm_model = SVC(kernel='linear', C=10)
 
     runner = Pipeline([
         ("mean_word_vectorizer", MeanEmbeddingVectorizer(word2vec)),
         #("tf_idf_vectorizer", TfidfEmbeddingVectorizer(word2vec)),
+
         #('classifier', LogisticRegression()),
-        ("extra_trees", ExtraTreesClassifier(n_estimators=200)),
+        #("extra_trees", ExtraTreesClassifier(n_estimators=200)),
+        ("the_svm", svm_model)
     ])
     runner.fit(X_train, y_train)
 
@@ -92,7 +97,7 @@ def main():
         , 'here ’s the man who ’s destroying the republican party but it ’s not donald trump'.split(' ')
         , "carly fiorina was briefly a republican primary star now she 's dropping out of the race".split(' ')
     ])
-    print([int_to_party(item) for item in samtest])
+    print([int_to_label(item) for item in samtest])
     exit(0)
     """
 
