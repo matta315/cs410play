@@ -1,10 +1,6 @@
 TAR_DEMOCRAT = 'democrat'
 TAR_REPUBLIC = 'republic'
 
-TAR_LEFT    = 'left'
-TAR_RIGHT   = 'right'
-TAR_NEUTRAL = 'neutral'
-
 TRAIN_RATIO = 0.6
 
 DATA_DIR = '../rawdata'
