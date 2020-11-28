@@ -51,7 +51,9 @@ def main():
     # !curl -s http://magnitude.plasticity.ai/fasttext+subword/wiki-news-300d-1M.magnitude --output vectors.magnitude
     """
 
-    word2vec = Magnitude("./vectors.magnitude")
+    word2vec = Magnitude(CORPUS_FF)
+    #word2vec = Magnitude(join(WORKING_DIR, 'glove.6B.50d.magnitude'))
+    #word2vec = Magnitude(join(WORKING_DIR, 'wiki-news-300d-1M.magnitude'))
 
     # debug to understand what word2vec is
     #print(len(word2vec))
