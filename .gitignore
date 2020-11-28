@@ -136,3 +136,6 @@ dmypy.json
 **/vectors.txt
 **/vocab.txt
 **/*.magnitude
+
+# ignore train test files
+work2vec/*.txt
