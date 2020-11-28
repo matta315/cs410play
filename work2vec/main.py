@@ -79,8 +79,8 @@ def main():
     svm_model = SVC(kernel='linear', C=10)
 
     runner = Pipeline([
-        ("mean_word_vectorizer", MeanEmbeddingVectorizer(word2vec)),
-        #("tf_idf_vectorizer", TfidfEmbeddingVectorizer(word2vec)),
+        #("mean_word_vectorizer", MeanEmbeddingVectorizer(word2vec)),
+        ("tf_idf_vectorizer", TfidfEmbeddingVectorizer(word2vec)),
 
         #('classifier', LogisticRegression()),
         #("extra_trees", ExtraTreesClassifier(n_estimators=200)),
