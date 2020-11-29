@@ -139,6 +139,6 @@ dmypy.json
 glove_genvecs/text8
 
 # data & model files
-work2vec/corpus/*
-work2vec/data/*
-work2vec/model/*
+work2vec/corpus/*.magnitude
+work2vec/data/*.txt
+work2vec/model/*.pkl

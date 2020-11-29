@@ -1,5 +1,7 @@
 import argparse
+from tabulate import tabulate
 
+import pandas as pd
 from joblib import dump, load
 from pymagnitude import Magnitude
 from sklearn import metrics
@@ -92,6 +94,9 @@ def main_train():
 
 def main_test():
     X_train, y_train, X_test, y_test, label_to_int, int_to_label = Utils.read_train_test_data(TRAIN_FF, TEST_FF)
+    #print(X_test[379], '=', int_to_label(y_test[379]))
+    #print(X_test[631], '=', int_to_label(y_test[631]))
+    #exit(0)
     word2vec = Magnitude(CORPUS_FF)
 
     # create transformer
@@ -107,13 +112,13 @@ def main_test():
         ("tf_idf_vectorizer", transformer),
         ("the_svm", svm_model)
     ])
-    predicted = runner.predict(X_test)
+    y_predicted = runner.predict(X_test)
 
     # Predicting with a test dataset
     # test pipeline
     #transformer.fit(X_test, None)
     #X_test_transformed = transformer.transform(X_test)
-    #predicted = svm_model.predict(X_test_transformed)
+    #y_predicted = svm_model.predict(X_test_transformed)
     """
     samtest = runner.predict([
         'moderate republican costello feels health care pressure in town hall'.split(' ')
@@ -123,11 +128,26 @@ def main_test():
     print([int_to_label(item) for item in samtest])
     exit(0)
     """
+
+    # pretty print to console
+    pd.set_option('display.max_colwidth', 0)
+    sentences = pd.Series(X_test)
+    sentences = sentences.str.wrap(90)
+    user_bias = pd.Series([int_to_label(lb) for lb in y_test])
+    predicted = pd.Series([int_to_label(lb) for lb in y_predicted])
+    frame = {'Headline': sentences, 'UserBias': user_bias, 'Predicted': predicted}
+    ddf = pd.DataFrame(frame)
+    ddf['Corrected?'] = ddf.apply(lambda rr: 'x' if rr['UserBias'] == rr['Predicted'] else '', axis=1)
+    print()
+    print(tabulate(ddf, headers='keys', tablefmt='grid'))
+
     # Model Accuracy
-    print("Accuracy :", metrics.accuracy_score(y_test, predicted))
-    print("Precision:", metrics.precision_score(y_test, predicted, zero_division=0, average='weighted'))
-    print("Recall   :", metrics.recall_score(y_test, predicted, zero_division=0, average='weighted'))
-    print("F1 score :", metrics.f1_score(y_test, predicted, zero_division=0, average='weighted'))
+    print()
+    print('----------------------------')
+    print("Accuracy :", metrics.accuracy_score(y_test, y_predicted))
+    print("Precision:", metrics.precision_score(y_test, y_predicted, zero_division=0, average='weighted'))
+    print("Recall   :", metrics.recall_score(y_test, y_predicted, zero_division=0, average='weighted'))
+    print("F1 score :", metrics.f1_score(y_test, y_predicted, zero_division=0, average='weighted'))
 
 
 if __name__ == '__main__':

@@ -63,16 +63,16 @@ class Utils(object):
         print("tests =", len(tests))
 
         # now have 2 arrays trains & tests, we proceed to write them to respective files
-        with open(train_ff, 'w') as ftrain:
+        with open(train_ff, 'w+') as ftrain:
             for ll in trains:
                 ftrain.write(ll + "\n")
-        with open(test_ff, 'w') as ftest:
+        with open(test_ff, 'w+') as ftest:
             for ll in tests:
                 ftest.write(ll + "\n")
 
         # build corpus
         # global thing to do: write to corpus txt for later generation of .magnitude database (word -> embedded vector)
-        with open(CORPUS_TRAIN_FF, 'w') as f_corpus_train, open(CORPUS_ALL_FF, 'w') as f_corpus_all:
+        with open(CORPUS_TRAIN_FF, 'w+') as f_corpus_train, open(CORPUS_ALL_FF, 'w+') as f_corpus_all:
             for ll in trains:
                 # do not include the target word
                 sent = ll.rsplit(' ', 1)[0]

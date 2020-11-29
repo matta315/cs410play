@@ -8,7 +8,7 @@ CORPUS_ALL_FF = ${WORKING_DIR}/work2vec/data/corpus-all.txt
 
 
 install:
-	python3 -m venv ./.venv
+	python -m venv ./.venv
 	chmod +x ./.venv/bin/activate
 	. ./.venv/bin/activate
 	#${PYTHON} --version
