@@ -78,7 +78,7 @@ def main_train():
     # create
     preprc = TextNormalizer()
     transformer = load_transformer(word2vec)
-    svm_model = SVC(kernel='linear', C=1)
+    svm_model = SVC(kernel='linear', C=5)
     # train pipeline
     runner = Pipeline([
         ("preprocessor", preprc),
@@ -90,6 +90,15 @@ def main_train():
     # save model
     dump(svm_model, open(SAVED_MODEL_FF, 'wb'))
     print('-- Model trained & saved to `{}`'.format(SAVED_MODEL_FF))
+
+    y_predicted = runner.predict(X_train)
+    # train performance
+    print()
+    print('-------------Train Accuracy---------------')
+    print("Accuracy :", metrics.accuracy_score(y_train, y_predicted))
+    print("Precision:", metrics.precision_score(y_train, y_predicted, zero_division=0, average='weighted'))
+    print("Recall   :", metrics.recall_score(y_train, y_predicted, zero_division=0, average='weighted'))
+    print("F1 score :", metrics.f1_score(y_train, y_predicted, zero_division=0, average='weighted'))
 
 
 def main_test():
@@ -143,7 +152,7 @@ def main_test():
 
     # Model Accuracy
     print()
-    print('----------------------------')
+    print('-------------Test Accuracy---------------')
     print("Accuracy :", metrics.accuracy_score(y_test, y_predicted))
     print("Precision:", metrics.precision_score(y_test, y_predicted, zero_division=0, average='weighted'))
     print("Recall   :", metrics.recall_score(y_test, y_predicted, zero_division=0, average='weighted'))
