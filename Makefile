@@ -10,6 +10,7 @@ install:
 	#${PYTHON} --version
 	#${PIP} --version
 	${PIP} install -r ${PACKAGES}
+	cd ${WORKING_DIR}/glove_genvecs && make && cd ${WORKING_DIR}
 
 # Run using pre-trained SVM
 run:
@@ -17,7 +18,11 @@ run:
 	${PYTHON} -m work2vec.main
 
 train:
-	echo 'train'
+	${PYTHON} -m work2vec.gen_dict_for_glove
+	cp work2vec/corpus-all.txt glove_genvecs/text8
+	cd ${WORKING_DIR}/glove_genvecs && ./demo.sh && cd ${WORKING_DIR}
+	cp -f ${WORKING_DIR}/glove_genvecs/vectors.magnitude ${WORKING_DIR}/work2vec/
+	${PYTHON} -m work2vec.main
 
 test:
 	echo 'just test'
