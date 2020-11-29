@@ -30,6 +30,7 @@ f
 
 def load_transformer(word2vec, X_train=None, y_train=None):
     trans = TfidfEmbeddingVectorizer(word2vec)
+    #trans = MeanEmbeddingVectorizer(word2vec)
     if X_train and y_train:
         print("-- loaded transformer")
         trans.fit(X_train, y_train)
@@ -77,11 +78,7 @@ def main_train():
     svm_model = SVC(kernel='linear', C=1)
     # train pipeline
     runner = Pipeline([
-        #("mean_word_vectorizer", MeanEmbeddingVectorizer(word2vec)),
         ("tf_idf_vectorizer", transformer),
-
-        #('classifier', LogisticRegression()),
-        #("extra_trees", ExtraTreesClassifier(n_estimators=200)),
         ("the_svm", svm_model)
     ])
     runner.fit(X_train, y_train)

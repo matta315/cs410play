@@ -142,5 +142,4 @@ glove_genvecs/text8
 work2vec/*.txt
 
 # data & model files
-**/*.csv
 work2vec/model/*
