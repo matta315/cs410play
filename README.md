@@ -1,25 +1,50 @@
 # CourseProject
-CS 410 Group Project
+CS 410 Group Project- Bias Detectives
 
-# Create and Activate a Virtual Enviroment called NLTK
-python3 -m venv .NLTK
+At this point in the project, we have divided our work into three different technical approaches to determine which is the most accurate for our use case
 
-# Activate the new virtual environment
-source .NLTK/bin/activate
+Rules_Model
+SVM_Model
+RNN_Model
 
-# Package install
-To install NLTK, run the following in the terminal
+------------------------------
+# Instructions for Rules based Model
+
+# Video Demo
+https://drive.google.com/file/d/1ycSjyZAlT915zT_RqlEKu-lhGaig8hyr/view?usp=sharing 
+
+# Instructions for testing Rules
 pip install nltk
 
-To install Numpy, run the following in the terminal
 pip install numpy
 
-To install Pandas, run the following in the terminal
 pip install pandas
 
-To install Scikit-learn, run the following in the terminal
-pip install scikit-learn
 
-To install spacy
-pip3 install spacy
-python3 -m spacy download en_core_web_sm
+------------------------------
+# Instructions for SVM based Model
+
+# Video Demo
+https://drive.google.com/file/d/1rGzV26i5q7GmMNR9MwLthTDqPrfe5H-4/view?usp=sharing 
+
+# Instruction for Testing SVM: 
+
+$make install – installing all necessary packages in local dir 
+
+$make data – build corpus 
+
+$make train – train model 
+
+$make test – test result  
+
+
+------------------------------
+
+# Instructions for testing RNN based Model
+
+Setup:
+
+1. Install Jupyter Notebook: "pip install notebook"
+2. Go to notebook directory in terminal
+3. Install TensorFlow: "pip install tensorflow==2.3"
+4. Run "jupyter notebook"
