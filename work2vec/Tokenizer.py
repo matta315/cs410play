@@ -36,7 +36,13 @@ class Tokenizer(object):
         ws = [tk.text if tk.pos_ == 'PRON' else tk.lemma_ for tk in toks]
         # lowercase all
         ws = [w.lower() for w in ws]
-        return ' '.join(ws).strip()
+
+        sent = ' '.join(ws).strip()
+
+        # beautiful multiple spaces -> single space!
+        # https://stackoverflow.com/questions/2077897/substitute-multiple-whitespace-with-single-whitespace-in-python
+        sent = ' '.join(sent.split())
+        return sent.strip()
 
 
 if __name__ == '__main__':

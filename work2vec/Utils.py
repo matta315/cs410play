@@ -34,7 +34,6 @@ class Utils(object):
             for item in items:
                 headline = item[0]
                 target = item[1].strip().lower()
-                headline = Toki.normalize_text(headline)
                 line_to_write = Utils.format_for_glove(headline, target)
 
                 if target not in target_to_data:
@@ -76,10 +75,14 @@ class Utils(object):
         with open(CORPUS_TRAIN_FF, 'w') as f_corpus_train, open(CORPUS_ALL_FF, 'w') as f_corpus_all:
             for ll in trains:
                 # do not include the target word
-                f_corpus_train.write(ll.rsplit(' ', 1)[0] + "\n")
+                sent = ll.rsplit(' ', 1)[0]
+                sent = Toki.normalize_text(sent)
+                f_corpus_train.write(sent + "\n")
             for ll in trains + tests:
                 # do not include the target word
-                f_corpus_all.write(ll.rsplit(' ', 1)[0] + "\n")
+                sent = ll.rsplit(' ', 1)[0]
+                sent = Toki.normalize_text(sent)
+                f_corpus_all.write(sent + "\n")
         pass
 
     @staticmethod
@@ -96,11 +99,17 @@ class Utils(object):
             """
         add_label, label_to_int, int_to_label = MagnitudeUtils.class_encoding()
 
-        X_train = [line.split(" ")[0:-1] for line in trains]
-        y_train = [add_label(line.split(" ")[-1]) for line in trains]
+        def get_sentence(line: str):
+            return line.rsplit(' ', 1)[0]
 
-        X_test = [line.split(" ")[0:-1] for line in tests]
-        y_test = [add_label(line.split(" ")[-1]) for line in tests]
+        def get_target(line: str):
+            return line.rsplit(' ', 1)[-1].strip().lower()
+
+        X_train = [get_sentence(line) for line in trains]
+        y_train = [add_label(get_target(line)) for line in trains]
+
+        X_test = [get_sentence(line) for line in tests]
+        y_test = [add_label(get_target(line)) for line in tests]
 
         return X_train, y_train, X_test, y_test, label_to_int, int_to_label
 

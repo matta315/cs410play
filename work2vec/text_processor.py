@@ -1,7 +1,24 @@
 from collections import defaultdict
 
 import numpy as np
+from sklearn.base import TransformerMixin
 from sklearn.feature_extraction.text import TfidfVectorizer
+
+from work2vec.Tokenizer import Tokenizer as Toki
+
+
+# Custom transformer using spaCy
+class TextNormalizer(TransformerMixin):
+    def transform(self, X, **transform_params):
+        clean_sents = [Toki.normalize_text(line) for line in X]
+        list_word = [stt.split() for stt in clean_sents]
+        return list_word
+
+    def fit(self, X, y=None, **fit_params):
+        return self
+
+    def get_params(self, deep=True):
+        return {}
 
 
 # Credit http://nadbordrozd.github.io/blog/2016/05/20/text-classification-with-word2vec/

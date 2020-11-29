@@ -8,7 +8,7 @@ from sklearn.svm import SVC
 
 from work2vec.Utils import Utils
 from work2vec.config import *
-from work2vec.text_vector import *
+from work2vec.text_processor import *
 
 """
 Trying this method
@@ -39,8 +39,8 @@ def load_transformer(word2vec, X_train=None, y_train=None):
 
 def main_train():
     X_train, y_train, X_test, y_test, label_to_int, int_to_label = Utils.read_train_test_data(TRAIN_FF, TEST_FF)
-    #print(X_train[0], '=', int_to_label(y_train[0]))
-    #print(X_test[0], '=', int_to_label(y_test[0]))
+    #print(X_train[296], '=', int_to_label(y_train[0]))
+    #print(X_test[296], '=', int_to_label(y_test[0]))
     #exit(0)
 
     """
@@ -74,10 +74,12 @@ def main_train():
     #print("dog" in word2vec)
 
     # create
+    preprc = TextNormalizer()
     transformer = load_transformer(word2vec)
     svm_model = SVC(kernel='linear', C=1)
     # train pipeline
     runner = Pipeline([
+        ("preprocessor", preprc),
         ("tf_idf_vectorizer", transformer),
         ("the_svm", svm_model)
     ])
@@ -93,6 +95,7 @@ def main_test():
     word2vec = Magnitude(CORPUS_FF)
 
     # create transformer
+    preprc = TextNormalizer()
     transformer = load_transformer(word2vec, X_train, y_train)
     # load model
     print('-- Loading model from `{}`'.format(SAVED_MODEL_FF))
@@ -100,6 +103,7 @@ def main_test():
 
     # rebuild pipeline
     runner = Pipeline([
+        ("preprocessor", preprc),
         ("tf_idf_vectorizer", transformer),
         ("the_svm", svm_model)
     ])
