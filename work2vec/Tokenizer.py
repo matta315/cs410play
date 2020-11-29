@@ -17,7 +17,7 @@ class Tokenizer(object):
         pass
 
     @classmethod
-    def tokenize_text(cls, text: str):
+    def normalize_text(cls, text: str) -> str:
         # initial tokenize
         doc = cls.nlp(text)
         toks = [tk for tk in doc]
@@ -40,6 +40,6 @@ class Tokenizer(object):
 
 
 if __name__ == '__main__':
-    text = """I'm telling you this, when learning data science, you shouldn't get discouraged! Challenges and setbacks aren't failures, they're just part of the journey. You've got this!"""
+    input_text = """I'm telling you this, when learning data science, you shouldn't get discouraged! Challenges and setbacks aren't failures, they're just part of the journey. You've got this!"""
     #text = """Trump is on the move for China. Obama's care is to be continued!"""
-    print(Tokenizer.tokenize_text(text))
+    print(Tokenizer.normalize_text(input_text))

@@ -13,11 +13,6 @@ class Utils(object):
     def __init__(self):
         pass
 
-    # TODO
-    @staticmethod
-    def clean_text_noise(tt: str):
-        return tt.strip()
-
     # Exmaple train file: http://magnitude.plasticity.ai/data/atis/atis-intent-train.txt
     # Exmaple test file : http://magnitude.plasticity.ai/data/atis/atis-intent-test.txt
     @staticmethod
@@ -39,8 +34,7 @@ class Utils(object):
             for item in items:
                 headline = item[0]
                 target = item[1].strip().lower()
-                headline = Utils.clean_text_noise(headline)
-                headline = Toki.tokenize_text(headline)
+                headline = Toki.normalize_text(headline)
                 line_to_write = Utils.format_for_glove(headline, target)
 
                 if target not in target_to_data:
@@ -84,68 +78,6 @@ class Utils(object):
                 # do not include the target word
                 f_corpus_train.write(ll.rsplit(' ', 1)[0] + "\n")
             for ll in trains + tests:
-                # do not include the target word
-                f_corpus_all.write(ll.rsplit(' ', 1)[0] + "\n")
-        pass
-
-    @staticmethod
-    def prepare_train_test_and_corpus(data_dir: str, train_ff: str, test_ff: str):
-        ffs = [f for f in listdir(data_dir) if isfile(join(data_dir, f)) and f.endswith('.csv')]
-        democrats = []
-        republics = []
-        for ff in ffs:
-            ff_path = join(data_dir, ff)
-            # print(ff_path)
-            if ff_path.endswith('_D.csv'):
-                target = TAR_DEMOCRAT
-            elif ff_path.endswith('_R.csv'):
-                target = TAR_REPUBLIC
-            else:
-                raise Exception("Error reading {}!".format(ff_path))
-            df = pd.read_csv(join(data_dir, ff))
-            titles = df['title'].to_list()
-            selected_group = democrats if target == TAR_DEMOCRAT else republics
-            for title in titles:
-                strline = title
-                strline = Utils.clean_text_noise(strline)
-                strline = Toki.tokenize_text(strline)
-                strline = Utils.format_for_glove(strline, target)
-                selected_group.append(strline)
-
-        # shuffle arrays to guarantee unbias training
-        random.shuffle(democrats)
-        random.shuffle(republics)
-        print("democrats =", len(democrats))
-        print("republics =", len(republics))
-
-        # the train/test split ratio has to applied separate to both democrats & republics, so that in either train or
-        # test set, our democrat count / republican count == same
-        c1 = int(len(democrats) * TRAIN_RATIO)
-        c2 = int(len(republics) * TRAIN_RATIO)
-        trains = democrats[:c1] + republics[:c2]
-        tests = democrats[c1:] + republics[c2:]
-        random.shuffle(trains)
-        random.shuffle(tests)
-        print("trains =", len(trains))
-        print("tests =", len(tests))
-
-        # now have 2 arrays trains & tests, we proceed to write them to respective files
-        with open(train_ff, 'w') as ftrain:
-            for ll in trains:
-                ftrain.write(ll + "\n")
-        with open(test_ff, 'w') as ftest:
-            for ll in tests:
-                ftest.write(ll + "\n")
-
-        # build corpus
-        # global thing to do: write to corpus txt for later generation of .magnitude database (word -> embedded vector)
-        with open(CORPUS_TRAIN_FF, 'w') as f_corpus_train, open(CORPUS_ALL_FF, 'w') as f_corpus_all:
-            for ll in trains:
-                # do not include the target word
-                f_corpus_train.write(ll.rsplit(' ', 1)[0] + "\n")
-            t_all = democrats + republics
-            random.shuffle(t_all)
-            for ll in t_all:
                 # do not include the target word
                 f_corpus_all.write(ll.rsplit(' ', 1)[0] + "\n")
         pass
