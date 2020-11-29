@@ -20,6 +20,8 @@ CORPUS_ALL_FF = join(WORKING_DIR, 'corpus-all.txt')
 
 CORPUS_FF = join(WORKING_DIR, './vectors.magnitude')
 
+SAVED_MODEL_FF = join(WORKING_DIR, './model/model-pipeline.joblib')
+
 
 class Config(object):
     def __init__(self):

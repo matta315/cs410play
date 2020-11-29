@@ -18,6 +18,7 @@ run:
 	${PYTHON} -m work2vec.main
 
 train:
+	. ./.venv/bin/activate
 	${PYTHON} -m work2vec.gen_dict_for_glove
 	cp work2vec/corpus-all.txt glove_genvecs/text8
 	cd ${WORKING_DIR}/glove_genvecs && ./demo.sh && cd ${WORKING_DIR}

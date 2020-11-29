@@ -26,22 +26,9 @@ f
 
 
 def main():
-    # this step is to prepare train, test & corpus as text files
-    # set to True to run once. You'll get 4 files: train, test, corpus-train & corpus-all
-    # then set to False to actually start training once you already had data
-    do_prepare_train_test = False
-    if do_prepare_train_test:
-        #Utils.prepare_train_test_and_corpus(DATA_DIR, TRAIN_FF, TEST_FF)
-        Utils.read_label_data(LABELED_DATA_DIR, TRAIN_FF, TEST_FF)
-        exit(0)
-
-    # STOP HERE! READ ME!
-    # STOP HERE! READ ME!
-    # Now: proceed to create the .magnitude file manually, then come back here and resume
-
     X_train, y_train, X_test, y_test, label_to_int, int_to_label = Utils.read_train_test_data(TRAIN_FF, TEST_FF)
-    print(X_train[0], '=', int_to_label(y_train[0]))
-    print(X_test[0], '=', int_to_label(y_test[0]))
+    #print(X_train[0], '=', int_to_label(y_train[0]))
+    #print(X_test[0], '=', int_to_label(y_test[0]))
     #exit(0)
 
     """
@@ -89,6 +76,14 @@ def main():
         ("the_svm", svm_model)
     ])
     runner.fit(X_train, y_train)
+
+    # save model
+    from joblib import dump, load
+    with open(SAVED_MODEL_FF, 'w') as temp:
+        dump(svm_model, SAVED_MODEL_FF)
+
+    # try loading
+    #runner_2 = load(SAVED_MODEL_FF)
 
     # Predicting with a test dataset
     predicted = runner.predict(X_test)
