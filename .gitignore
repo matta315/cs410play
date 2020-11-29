@@ -140,3 +140,7 @@ glove_genvecs/text8
 
 # ignore train test files
 work2vec/*.txt
+
+# data & model files
+**/*.csv
+work2vec/model/*

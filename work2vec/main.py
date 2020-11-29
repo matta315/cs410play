@@ -31,7 +31,7 @@ f
 def load_transformer(word2vec, X_train=None, y_train=None):
     trans = TfidfEmbeddingVectorizer(word2vec)
     if X_train and y_train:
-        print("-- loading transformer")
+        print("-- loaded transformer")
         trans.fit(X_train, y_train)
     return trans
 
@@ -125,9 +125,9 @@ def main_test():
     """
     # Model Accuracy
     print("Accuracy :", metrics.accuracy_score(y_test, predicted))
-    print("Precision:", metrics.precision_score(y_test, predicted, average='weighted'))
-    print("Recall   :", metrics.recall_score(y_test, predicted, average='weighted'))
-    print("F1 score :", metrics.f1_score(y_test, predicted, average='weighted'))
+    print("Precision:", metrics.precision_score(y_test, predicted, zero_division=0, average='weighted'))
+    print("Recall   :", metrics.recall_score(y_test, predicted, zero_division=0, average='weighted'))
+    print("F1 score :", metrics.f1_score(y_test, predicted, zero_division=0, average='weighted'))
 
 
 if __name__ == '__main__':
