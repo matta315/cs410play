@@ -32,8 +32,8 @@ def load_transformer(word2vec, X_train=None, y_train=None):
     trans = TfidfEmbeddingVectorizer(word2vec)
     #trans = MeanEmbeddingVectorizer(word2vec)
     if X_train and y_train:
-        print("-- loaded transformer")
         trans.fit(X_train, y_train)
+        print("-- loaded transformer")
     return trans
 
 
@@ -94,7 +94,6 @@ def main_test():
 
     # create transformer
     transformer = load_transformer(word2vec, X_train, y_train)
-    transformer.fit(X_train, y_train)
     # load model
     print('-- Loading model from `{}`'.format(SAVED_MODEL_FF))
     svm_model = load(open(SAVED_MODEL_FF, 'rb'))

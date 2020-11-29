@@ -25,6 +25,8 @@ CORPUS_TRAIN_FF = __file('corpus-train.txt')
 CORPUS_ALL_FF = __file('corpus-all.txt')
 
 CORPUS_FF = __file('./vectors.magnitude')
+#CORPUS_FF = __file('./glove.6B.50d.magnitude')
+#CORPUS_FF = __file('./wiki-news-300d-1M.magnitude')
 
 SAVED_TRANSFORMER_FF = __file('./model/transformer.pkl')
 SAVED_MODEL_FF = __file('./model/model.pkl')
