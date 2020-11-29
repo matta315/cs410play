@@ -1,7 +1,11 @@
 WORKING_DIR = $(shell pwd)
+
 PYTHON      = ${WORKING_DIR}/.venv/bin/python3
 PIP         = ${WORKING_DIR}/.venv/bin/pip3
 PACKAGES    = ${WORKING_DIR}/requirements.txt
+
+CORPUS_ALL_FF = ${WORKING_DIR}/work2vec/data/corpus-all.txt
+
 
 install:
 	python3 -m venv ./.venv
@@ -12,12 +16,12 @@ install:
 	${PIP} install -r ${PACKAGES}
 	cd ${WORKING_DIR}/glove_genvecs && make && cd ${WORKING_DIR}
 
-corpus:
+data:
 	. ./.venv/bin/activate
-	${PYTHON} -m work2vec.gen_dict_for_glove
-	cp work2vec/corpus-all.txt glove_genvecs/text8
+	${PYTHON} -m work2vec.prepare_data
+	cp ${CORPUS_ALL_FF} ${WORKING_DIR}/glove_genvecs/text8
 	cd ${WORKING_DIR}/glove_genvecs && ./demo.sh && cd ${WORKING_DIR}
-	cp -f ${WORKING_DIR}/glove_genvecs/vectors.magnitude ${WORKING_DIR}/work2vec/
+	cp -f ${WORKING_DIR}/glove_genvecs/vectors.magnitude ${WORKING_DIR}/work2vec/corpus/
 
 train:
 	${PYTHON} -m work2vec.main --train
