@@ -1,33 +1,33 @@
 # CourseProject
 CS 410 Group Project- Bias Detectives
 
-At this point in the project, we have divided our work into three different technical approaches to determine which is the most accurate for our use case
+At this point in the project, we have divided our work into three different technical approaches to determine which is the most accurate for our use case.
 
-Rules_Model
-SVM_Model
-RNN_Model
 
 ------------------------------
-# Instructions for Rules based Model
 
-# Video Demo
+# Rules_Model
+
+Video Demo
 https://drive.google.com/file/d/1ycSjyZAlT915zT_RqlEKu-lhGaig8hyr/view?usp=sharing 
 
-# Instructions for testing Rules
+# Instructions for testing Rules_Model
 pip install nltk
 
 pip install numpy
 
 pip install pandas
 
+python3 sentiment_test.py
 
 ------------------------------
-# Instructions for SVM based Model
 
-# Video Demo
+# SVM_Model
+
+Video Demo
 https://drive.google.com/file/d/1rGzV26i5q7GmMNR9MwLthTDqPrfe5H-4/view?usp=sharing 
 
-# Instruction for Testing SVM: 
+# Instruction for Testing SVM_Model: 
 
 $make install – installing all necessary packages in local dir 
 
@@ -40,9 +40,11 @@ $make test – test result
 
 ------------------------------
 
-# Instructions for testing RNN based Model
+# RNN_Model
 
-Setup:
+Video Demo - None
+
+# Instruction for Testing SVM_Model: 
 
 1. Install Jupyter Notebook: "pip install notebook"
 2. Go to notebook directory in terminal
