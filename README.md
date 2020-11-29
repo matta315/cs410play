@@ -10,7 +10,7 @@ At this point in the project, we have divided our work into three different tech
 Video Demo
 https://drive.google.com/file/d/1ycSjyZAlT915zT_RqlEKu-lhGaig8hyr/view?usp=sharing 
 
-# Instructions for testing Rules_Model
+Instructions for testing Rules_Model:
 
 $pip install nltk
 
@@ -27,7 +27,7 @@ $python3 sentiment_test.py
 Video Demo
 https://drive.google.com/file/d/1rGzV26i5q7GmMNR9MwLthTDqPrfe5H-4/view?usp=sharing 
 
-# Instruction for Testing SVM_Model: 
+Instruction for testing SVM_Model: 
 
 $make install – installing all necessary packages in local dir 
 
@@ -44,7 +44,7 @@ $make test – test result
 
 Video Demo - None
 
-# Instruction for Testing SVM_Model: 
+Instruction for testing SVM_Model: 
 
 1. Install Jupyter Notebook: "pip install notebook"
 2. Go to notebook directory in terminal
