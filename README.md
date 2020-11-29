@@ -1,8 +1,7 @@
 # CourseProject
 CS 410 Group Project- Bias Detectives
 
-At this point in the project, we have divided our work into three different technical approaches to determine which is the most accurate for our use case.
-
+At this point in the project, we have divided our work into three different technical approaches to determine which is the most accurate for our use case.  If you would like to test the code, clone this repo and follow the instructions below.  You can also download a video demo of Rules and SVM.  
 
 ------------------------------
 
@@ -12,13 +11,14 @@ Video Demo
 https://drive.google.com/file/d/1ycSjyZAlT915zT_RqlEKu-lhGaig8hyr/view?usp=sharing 
 
 # Instructions for testing Rules_Model
-pip install nltk
 
-pip install numpy
+$pip install nltk
 
-pip install pandas
+$pip install numpy
 
-python3 sentiment_test.py
+$pip install pandas
+
+$python3 sentiment_test.py
 
 ------------------------------
 
