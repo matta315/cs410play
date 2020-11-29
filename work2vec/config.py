@@ -7,9 +7,8 @@ WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 TAR_DEMOCRAT = 'democrat'
 TAR_REPUBLIC = 'republic'
 
-TRAIN_RATIO = 0.7
+TRAIN_RATIO = 0.6
 
-DATA_DIR = join(WORKING_DIR, '../rawdata')
 LABELED_DATA_DIR = join(WORKING_DIR, '../labeled_data/politics')
 #LABELED_DATA_DIR = '../labeled_data/airline'
 TRAIN_FF = join(WORKING_DIR, './train.txt')
@@ -20,7 +19,8 @@ CORPUS_ALL_FF = join(WORKING_DIR, 'corpus-all.txt')
 
 CORPUS_FF = join(WORKING_DIR, './vectors.magnitude')
 
-SAVED_MODEL_FF = join(WORKING_DIR, './model/model-pipeline.joblib')
+SAVED_TRANSFORMER_FF = join(WORKING_DIR, './model/transformer.pkl')
+SAVED_MODEL_FF = join(WORKING_DIR, './model/model.pkl')
 
 
 class Config(object):
