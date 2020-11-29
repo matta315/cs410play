@@ -74,7 +74,7 @@ def main_train():
 
     # create
     transformer = load_transformer(word2vec)
-    svm_model = SVC(kernel='linear', C=10)
+    svm_model = SVC(kernel='linear', C=1)
     # train pipeline
     runner = Pipeline([
         #("mean_word_vectorizer", MeanEmbeddingVectorizer(word2vec)),
