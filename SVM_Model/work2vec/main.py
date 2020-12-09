@@ -8,9 +8,9 @@ from sklearn import metrics
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
 
-from work2vec.Utils import Utils
-from work2vec.config import *
-from work2vec.text_processor import *
+from SVM_Model.work2vec.Utils import Utils
+from SVM_Model.work2vec.config import *
+from SVM_Model.work2vec.text_processor import *
 
 """
 Trying this method

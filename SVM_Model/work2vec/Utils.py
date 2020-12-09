@@ -4,7 +4,6 @@ from os.path import isfile, join
 
 import pandas as pd
 from pymagnitude import MagnitudeUtils
-
 from work2vec.Tokenizer import Tokenizer as Toki
 from work2vec.config import *
 
