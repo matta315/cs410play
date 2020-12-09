@@ -12,3 +12,4 @@ news_test.py
 data_raw/*.txt
 .idea/
 **/__pycache__/
+**/data/*.txt
